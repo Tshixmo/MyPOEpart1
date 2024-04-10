@@ -78,12 +78,20 @@ class Recipe
 
     public void Scaling()
     {
+        Console.WriteLine("Enter the scaling factor for your recipe: 0.5, 2 or 3");
+        double factor = Convert.ToDouble(Console.ReadLine());
 
+        for (int i = 0; i < quantity.Length; i++)
+        {
+            quantity[i] *= factor;
+        }
+
+        Console.WriteLine("Your Recipe has been successfully scaled by " + factor);
     }
 
     public void Reset()
     {
-
+        Console.WriteLine("Quantity reset to orignal values");
     }
 
     public void ClearData()
