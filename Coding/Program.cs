@@ -7,7 +7,51 @@ namespace MyRecipe
     {
         static void Main()
         {
+            Recipe myrep = new Recipe();
+            bool exit = false;
 
+            while (!exit)
+            {
+                Console.WriteLine("1. Enter Recipe Details:" +
+                    "2. Display Recipe" +
+                    "3. Scale Recipe" +
+                    "4. Reset quantities" +
+                    "5. Clear all data" +
+                    "6. Exit");
+
+                Console.WriteLine("Select an option: ");
+                string input = Console.ReadLine();
+                Console.ReadKey();
+
+                if (input == "1")
+                {
+                    myrep.TheRecipeDetails();
+                }
+                if (input == "2")
+                {
+                    myrep.DisplayingTheRecipe();
+                }
+                if (input == "3")
+                {
+                    myrep.Scaling();
+                }
+                if (input == "4")
+                {
+                    myrep.Reset();
+                }
+                if (input == "5")
+                {
+                    myrep.ClearData();
+                }
+                if (input == "6")
+                {
+                    exit = true;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input");
+                }
+            }
         }
     }
 }
