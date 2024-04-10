@@ -59,7 +59,21 @@ class Recipe
 
     public void DisplayingTheRecipe()
     {
+        //Displaying the recipe and the ingredient in it. 
+        Console.WriteLine("Ingredient: ");
+        Console.WriteLine("Recipe: ");
 
+        for (int i = 0; i < ingredients.Length; i++)
+        {
+            Console.WriteLine((i + 1) + "." + quantity[i] + units[i] + "of" + ingredients[i]);
+        }
+
+        //Displaying the steps in the recipe.
+        Console.WriteLine("Steps: ");
+        for (int i = 0; i < steps.Length; i++)
+        {
+            Console.WriteLine((i + 1) + "." + steps[i]);
+        }
     }
 
     public void Scaling()
