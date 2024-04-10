@@ -23,35 +23,32 @@ namespace MyRecipe
                 string input = Console.ReadLine();
                 Console.ReadKey();
 
-                if (input == "1")
+                switch (input)
                 {
-                    myrep.TheRecipeDetails();
+                    case "1":
+                        myrep.TheRecipeDetails();
+                        break;
+                    case "2":
+                        myrep.DisplayingTheRecipe();
+                        break;
+                    case "3":
+                        myrep.Scaling();
+                        break;
+                    case "4":
+                        myrep.Reset();
+                        break;
+                    case "5":
+                        myrep.ClearData();
+                        break;
+                    case "6":
+                        exit = true;
+                        Console.WriteLine("Bye Bye");
+                        Console.ReadKey();
+                        break;
+                    default:
+                        Console.WriteLine("Invalid option. Please try again.");
+                        break;
                 }
-                if (input == "2")
-                {
-                    myrep.DisplayingTheRecipe();
-                }
-                if (input == "3")
-                {
-                    myrep.Scaling();
-                }
-                if (input == "4")
-                {
-                    myrep.Reset();
-                }
-                if (input == "5")
-                {
-                    myrep.ClearData();
-                }
-                if (input == "6")
-                {
-                    exit = true;
-                }
-                else
-                {
-                    Console.WriteLine("Invalid input");
-                }
-            }
         }
     }
 }
