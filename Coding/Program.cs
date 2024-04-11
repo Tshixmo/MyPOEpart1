@@ -13,11 +13,11 @@ namespace MyRecipe
             while (!exit)
             {
                 Console.WriteLine("1. Enter Recipe Details:" +
-                    "2. Display Recipe" +
-                    "3. Scale Recipe" +
-                    "4. Reset quantities" +
-                    "5. Clear all data" +
-                    "6. Exit");
+                    "\n2. Display Recipe" +
+                    "\n3. Scale Recipe" +
+                    "\n4. Reset quantities" +
+                    "\n5. Clear all data" +
+                    "\n6. Exit");
 
                 Console.WriteLine("Select an option: ");
                 string input = Console.ReadLine();
@@ -62,48 +62,63 @@ namespace MyRecipe
 
         public void TheRecipeDetails()
         {
-            //Ask the number of ingredients the user wants to enter
-            Console.WriteLine("Enter the number of ingredients your recipe will have? ");
-            int numIngred = Convert.ToInt32(Console.ReadLine());
-
-            //Creating arrays for the ingredient, quantity and units to be stored in. With the number of ingredients
-            //as the 
-            ingredients = new string[numIngred];
-            quantity = new double[numIngred];
-            units = new string[numIngred];
-
-            // This will iterate based on the number of ingredient they are. 
-            for (int i = 0; i < numIngred; i++)
+            try
             {
-                Console.WriteLine("Enter the name of the ingredient: ");
-                ingredients[i] = Console.ReadLine();
+                //Ask the number of ingredients the user wants to enter
+                Console.WriteLine("Enter the number of ingredients your recipe will have? ");
+                int numIngred = Convert.ToInt32(Console.ReadLine());
 
-                Console.WriteLine("Enter the quantity for the " + ingredients[i] + " :");
-                quantity[i] = Convert.ToDouble(Console.ReadLine());
+                //Creating arrays for the ingredient, quantity and units to be stored in. With the number of ingredients
+                //as the intializer
+                ingredients = new string[numIngred];
+                quantity = new double[numIngred];
+                units = new string[numIngred];
 
-                Console.WriteLine("Enter the unit of measurement for the " + ingredients[i] + " :");
-                units[i] = Console.ReadLine();
+                // This will iterate based on the number of ingredient they are. 
+                for (int i = 0; i < numIngred; i++)
+                {
+                    Console.WriteLine("Enter the name of the ingredient: ");
+                    ingredients[i] = Console.ReadLine();
+
+                    Console.WriteLine("Enter the quantity for the " + ingredients[i] + " :");
+                    quantity[i] = Convert.ToDouble(Console.ReadLine());
+
+                    Console.WriteLine("Enter the unit of measurement for the " + ingredients[i] + " :");
+                    units[i] = Console.ReadLine();
+                }
+
+                Console.WriteLine("Enter the number of steps the recipe has: ");
+                int stepNum = Convert.ToInt32(Console.ReadLine());
+
+                steps = new string[stepNum];
+
+                for (int i = 0; i < stepNum; i++)
+                {
+                    Console.WriteLine("Enter step" + (i + 1) + ":");
+                    steps[i] = Console.ReadLine();
+                }
+                Console.WriteLine();
             }
 
-            Console.WriteLine("Enter the number of steps the recipe has");
-            int stepNum = Convert.ToInt32(Console.ReadLine());
-
-            steps = new string[stepNum];
-
-            for (int i = 0; i < stepNum; i++)
+            catch (FormatException)
             {
-                Console.WriteLine("Enter step" + (i + 1) + ":");
-                steps[i] = Console.ReadLine();
+                Console.WriteLine("Invalid input, please put an integer");
             }
-            Console.WriteLine();
         }
 
         public void DisplayingTheRecipe()
         {
+            if (ingredients == null || ingredients.Length == 0)
+            {
+                Console.WriteLine("There is nothing to display");
+                return;
+            }
+
             //Displaying the recipe and the ingredient in it. 
             Console.WriteLine("Ingredient: ");
             Console.WriteLine("Recipe: ");
 
+            
             for (int i = 0; i < ingredients.Length; i++)
             {
                 Console.WriteLine((i + 1) + ". " + quantity[i] + units[i] + " " + "of " + ingredients[i]);
@@ -120,6 +135,12 @@ namespace MyRecipe
 
         public void Scaling()
         {
+            if (quantity == null || quantity.Length == 0)
+            {
+                Console.WriteLine("There is nothing to scale");
+                return;
+            }
+
             Console.WriteLine("Enter the scaling factor for your recipe: 0.5, 2 or 3");
             double factor = Convert.ToDouble(Console.ReadLine());
 
@@ -134,8 +155,19 @@ namespace MyRecipe
 
         public void Reset()
         {
-            Console.WriteLine("Quantity reset to orignal values");
-            Console.WriteLine();
+            Console.WriteLine("Are you sure you want to clear all the data? y or n")
+                var resetingData = Console.ReadLine();
+
+            if(resetingData == y)
+            {
+                Console.WriteLine("Quantity reset to orignal values");
+                Console.WriteLine();
+            }
+            else
+            {
+                Console.WriteLine("You have choosen not to reset the quantity");
+                return; 
+            }
         }
 
         public void ClearData()
