@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Buffers.Text;
+using System.Linq;
+using System.Threading.Tasks; 
 
 namespace MyRecipe
 {
@@ -99,15 +100,16 @@ namespace MyRecipe
                 }
                 Console.WriteLine();
             }
-
+            //This will ask the user to put an integer and not an string
             catch (FormatException)
             {
                 Console.WriteLine("Invalid input, please put an integer");
             }
         }
-
+        
         public void DisplayingTheRecipe()
         {
+            //If nothing is enter into the recipe or if it was cleared it will tell the user that theres nothing stored to display.
             if (ingredients == null || ingredients.Length == 0)
             {
                 Console.WriteLine("There is nothing to display");
@@ -134,6 +136,7 @@ namespace MyRecipe
 
         public void Scaling()
         {
+            //If nothing is stored in the recipe quantity it will tell the user theres nothing to scale. 
             if (quantity == null || quantity.Length == 0)
             {
                 Console.WriteLine("There is nothing to scale");
@@ -144,6 +147,7 @@ namespace MyRecipe
             Console.WriteLine("Enter the scaling factor for your recipe: 0.5, 2 or 3");
             double factor = Convert.ToDouble(Console.ReadLine());
 
+            //This will multiply each quantity stored by which ever integer they enter. 
             for (int i = 0; i < quantity.Length; i++)
             {
                 quantity[i] *= factor;
@@ -155,6 +159,7 @@ namespace MyRecipe
 
         public void Reset()
         {
+            //this will ask the user if they are sure that they want to clear their data
             Console.WriteLine("Are you sure you want to clear all the data? y or n");
             string resetingData = Console.ReadLine();
 
@@ -162,6 +167,11 @@ namespace MyRecipe
             {
                 Console.WriteLine("Quantity reset to orignal values");
                 Console.WriteLine();
+
+                for (int i = 0; i < quantity.Length; i++)
+                {
+                    quantity[i] / factor;
+                }
             }
             if(resetingData == "n")
             {
@@ -173,6 +183,7 @@ namespace MyRecipe
 
         public void ClearData()
         {
+            //this will clear all the data stored in the each of the variables. 
             ingredients = null;
             quantity = null;
             units = null;
