@@ -94,7 +94,7 @@ namespace MyRecipe
 
                 for (int i = 0; i < stepNum; i++)
                 {
-                    Console.WriteLine("Enter step" + (i + 1) + ":");
+                    Console.WriteLine("Enter step " + (i + 1) + ":");
                     steps[i] = Console.ReadLine();
                 }
                 Console.WriteLine();
@@ -111,14 +111,13 @@ namespace MyRecipe
             if (ingredients == null || ingredients.Length == 0)
             {
                 Console.WriteLine("There is nothing to display");
+                Console.WriteLine();
                 return;
             }
 
             //Displaying the recipe and the ingredient in it. 
-            Console.WriteLine("Ingredient: ");
-            Console.WriteLine("Recipe: ");
+            Console.WriteLine("Ingredient and recipe: ");
 
-            
             for (int i = 0; i < ingredients.Length; i++)
             {
                 Console.WriteLine((i + 1) + ". " + quantity[i] + units[i] + " " + "of " + ingredients[i]);
@@ -138,6 +137,7 @@ namespace MyRecipe
             if (quantity == null || quantity.Length == 0)
             {
                 Console.WriteLine("There is nothing to scale");
+                Console.WriteLine();
                 return;
             }
 
@@ -155,17 +155,18 @@ namespace MyRecipe
 
         public void Reset()
         {
-            Console.WriteLine("Are you sure you want to clear all the data? y or n")
-                var resetingData = Console.ReadLine();
+            Console.WriteLine("Are you sure you want to clear all the data? y or n");
+            string resetingData = Console.ReadLine();
 
-            if(resetingData == y)
+            if(resetingData == "y")
             {
                 Console.WriteLine("Quantity reset to orignal values");
                 Console.WriteLine();
             }
-            else
+            if(resetingData == "n")
             {
                 Console.WriteLine("You have choosen not to reset the quantity");
+                Console.WriteLine();
                 return; 
             }
         }
