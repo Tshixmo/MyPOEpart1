@@ -68,7 +68,13 @@ namespace MyRecipe
         {
             Recipe recipe = new Recipe();
             recipe.EnterRecipeDetails();
+            recipe.TotalCaloriesExceeded += RecipeTotalCaloriesExceeded;
             recipes.Add(recipe);
+        }
+
+        private void TotalCaloriesExceededHandler(CaloriesExceededEvent e)
+        {
+            Console.WriteLine("WARNING: Your recipe has more than 300 calories!!");
         }
 
         public void DisplayRecipe()
@@ -152,15 +158,26 @@ namespace MyRecipe
         }
     }
 
+    public class CaloriesExceededEvent : EventArgs
+    {
+        public double TotalCalories { get; }
+
+        public CaloriesExceededEvent(double totalCalories)
+        {
+            TotalCalories = totalCalories;
+        }
+    }
+
     class Recipe
     {
-        public List<string> Ingredients { get; private set; }
-        public List<double> Quantities { get; private set; }
-        public List<string> Units { get; private set; }
-        public List<string> Steps { get; private set; }
-        public List<double> Calories { get; private set; }
-        public List<string> FoodGroups { get; private set; }
+        public List<string> Ingredients { get; set; }
+        public List<double> Quantities { get; set; }
+        public List<string> Units { get; set; }
+        public List<string> Steps { get; set; }
+        public List<double> Calories { get; set; }
+        public List<string> FoodGroups { get; set; }
         public List<double> OriginalQuantities { get; set; }
+        private List<double> OriginalCalories { get; set; }
 
         public Recipe()
         {
@@ -170,7 +187,12 @@ namespace MyRecipe
             Steps = new List<string>();
             Calories = new List<double>();
             FoodGroups = new List<string>();
+            OriginalQuantities = new List<double>();
+            OriginalCalories = new List<double>();
         }
+
+        public delegate void TotalCaloriesExceededHandler(CaloriesExceededEvent e);
+        public event TotalCaloriesExceededHandler TotalCaloriesExceeded;
 
         public void EnterRecipeDetails()
         {
@@ -243,6 +265,15 @@ namespace MyRecipe
                 Console.WriteLine($"Enter step {i + 1}:");
                 Steps.Add(Console.ReadLine());
             }
+
+            OriginalQuantities = new List<double>(Quantities);
+            OriginalCalories = new List<double>(Calories);
+
+            double totalCalories = CalculateTotalCalories();
+            if (totalCalories > 300)
+            {
+                TotalCaloriesExceeded.Invoke(this, new CaloriesExceededEvent(totalCalories));
+            }
         }
 
         public void DisplayRecipe()
@@ -279,25 +310,25 @@ namespace MyRecipe
 
             for (int i = 0; i < Quantities.Count; i++)
             {
-                Quantities[i] *= factor;
-                Calories[i] *= factor;
+                Quantities[i] = OriginalQuantities[i] * factor;
+                Calories[i] =  OriginalCalories[i] * factor;
             }
 
             Console.WriteLine($"Recipe quantities scaled by a factor of {factor}.");
         }
 
-        public void Reset(double factor)
+        public void Reset()
         {
-            if (Quantities.Count == 0)
+            if (OriginalQuantities.Count == 0)
             {
                 Console.WriteLine("No quantities available to scale.");
                 return;
             }
 
-            for (int i = 0; i < Quantities.Count; i++)
+            for (int i = 0; i < OriginalQuantities.Count; i++)
             {
-                Quantities[i] /= factor;
-                Calories[i] /= factor;
+                Quantities[i] = OriginalQuantities[i];
+                Calories[i] = OriginalCalories[i];
             }
         }
 
@@ -309,7 +340,19 @@ namespace MyRecipe
             Steps.Clear();
             Calories.Clear();
             FoodGroups.Clear();
+            OriginalQuantities.Clear();
+            OriginalCalories.Clear();
             Console.WriteLine("Recipe data cleared.");
+        }
+
+        private double CalculateTotalCalories()
+        {
+            double totalCalories = 0;
+            for (int i = 0; i < Calories.Count; i++)
+            {
+                totalCalories += Calories[i];
+            }
+            return totalCalories;
         }
     }
 }
