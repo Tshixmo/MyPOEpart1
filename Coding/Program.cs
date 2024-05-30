@@ -67,12 +67,12 @@ namespace MyRecipe
         public void EnterRecipe()
         {
             Recipe recipe = new Recipe();
+            recipe.TotalCaloriesExceeded += TotalCaloriesExceededHandler;
             recipe.EnterRecipeDetails();
-            recipe.TotalCaloriesExceeded += RecipeTotalCaloriesExceeded;
             recipes.Add(recipe);
         }
 
-        private void TotalCaloriesExceededHandler(CaloriesExceededEvent e)
+        private void TotalCaloriesExceededHandler(object sender, CaloriesExceededEvent e)
         {
             Console.WriteLine("WARNING: Your recipe has more than 300 calories!!");
         }
@@ -191,7 +191,7 @@ namespace MyRecipe
             OriginalCalories = new List<double>();
         }
 
-        public delegate void TotalCaloriesExceededHandler(CaloriesExceededEvent e);
+        public delegate void TotalCaloriesExceededHandler(object sender, CaloriesExceededEvent e);
         public event TotalCaloriesExceededHandler TotalCaloriesExceeded;
 
         public void EnterRecipeDetails()
@@ -272,7 +272,11 @@ namespace MyRecipe
             double totalCalories = CalculateTotalCalories();
             if (totalCalories > 300)
             {
-                TotalCaloriesExceeded.Invoke(this, new CaloriesExceededEvent(totalCalories));
+                if (TotalCaloriesExceeded != null)
+                {
+                    TotalCaloriesExceeded(this, new CaloriesExceededEvent(totalCalories));
+                }
+                
             }
         }
 
