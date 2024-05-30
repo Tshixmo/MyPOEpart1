@@ -104,11 +104,13 @@ namespace MyRecipe
                 return;
             }
 
-            Console.WriteLine("All recipes: ");
-            for (int i = 0; i < recipes.Count; i++)
+            var sortedRecipes = recipes.OrderBy(r => r.Name).ToList();
+
+            Console.WriteLine("All the recipes in alphabetical order: ");
+            for(int i = 0; i < sortedRecipes.Count; i++)
             {
                 Console.WriteLine($"Recipe {i + 1}:");
-                recipes[i].DisplayRecipe();
+                sortedRecipes[i].DisplayRecipe();
                 Console.WriteLine();
             }
         }
@@ -170,6 +172,7 @@ namespace MyRecipe
 
     class Recipe
     {
+        public string Name { get; set; }
         public List<string> Ingredients { get; set; }
         public List<double> Quantities { get; set; }
         public List<string> Units { get; set; }
@@ -196,6 +199,8 @@ namespace MyRecipe
 
         public void EnterRecipeDetails()
         {
+            Console.WriteLine("Enter the name of the recipe:");
+            Name = Console.ReadLine();
             Console.WriteLine("Enter the number of ingredients your recipe will have:");
             int numIngredients = int.Parse(Console.ReadLine());
 
