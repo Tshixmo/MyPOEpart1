@@ -10,6 +10,7 @@ To run this application you should:
     Build the solution and compile the application. 
 
 Follow the on-screen prompts to perform various actions like entering the recipe details, displaying the recipe, 
-scaling the recipe, resetting the quantities and clearing all the data. 
+scaling the recipe, resetting the quantities and clearing all the data. The user should enter the ingredients, steps to cook the recipe, enter the amount of calories in the recipe and which food group the ingredient belongs to. 
+If the users calorie count is higher than 300 the application will display a message saying the recipe calories exceed 300.
 Remember to choose appropriate option by entering the corresponding number, word or key. 
 
